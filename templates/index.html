@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click2Mask - Image Upload</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://unpkg.com/htmx.org@2.0.3"
+        integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+        crossorigin="anonymous"></script>
+
+    <style>
+        .htmx-indicator {
+            display: none;
+        }
+
+        .htmx-request .htmx-indicator {
+            display: inline;
+        }
+
+        .htmx-request.htmx-indicator {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Click2Mask</h1>
+            <p class="text-gray-600">Select objects to segment using SAM-2</p>
+        </header>
+
+        <div class="max-w-6xl mx-auto">
+            <div class=" mx-auto bg-white rounded-lg shadow-md p-6">
+                <!-- File Upload Form -->
+                <form 
+                    hx-post="/upload" 
+                    hx-encoding="multipart/form-data" 
+                    hx-target="#result" 
+                    class="space-y-4">
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">
+                            Upload Image
+                        </label>
+                        <input 
+                            type="file" 
+                            name="file" 
+                            accept="image/*"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <button type="submit"
+                            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Upload
+                            <span class="htmx-indicator ml-2">
+                                Uploading...
+                            </span>
+                        </button>
+                </form>
+                </div>
+
+                <!-- Result Area -->
+                <div id="result" class="mt-6">
+                    <!-- Will be updated with the server response -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

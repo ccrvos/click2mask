@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "click2mask"
+version = "0.1.0"
+description = "Generate image masks via user clicks using SAM2"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "transformers",
+  "pillow",
+  "python-multipart",
+  "jinja2",
+  "ipython",
+  "matplotlib",
+  "debugpy",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "black", "pylint"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
+[tool.hatch.build.targets.wheel]
+packages = ["click2mask"]

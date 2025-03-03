@@ -1,0 +1,26 @@
+{
+    "name": "Click2Mask",
+    "dockerComposeFile": ["../docker/docker-compose.yml"],
+    "service": "click2mask",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "njpwerner.autodocstring",
+                "streetsidesoftware.code-spell-checker",
+                "ms-azuretools.vscode-docker"
+            ],
+            "settings": {
+                "python.analysis.extraPaths": [
+                    "/app",
+                    "/opt/packages/sam2",
+                    "./src/click2mask"
+                ],
+                "python.analysis.indexing": true
+            }
+        }
+    }
+}

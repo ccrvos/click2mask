@@ -1,0 +1,60 @@
+<div class="grid grid-cols-2 gap-4">
+    <!-- Left side: Original image, coordinate selection, and mask generation -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <form 
+                id="image-form"
+                hx-post="/select-point"
+                hx-target="#coordinate-display"
+                class="relative inline-block"
+                hx-debug="true">
+                
+                <input type="hidden" name="file_path" value="{{ file_path }}">
+                <input type="hidden" name="click.x" id="click-x">
+                <input type="hidden" name="click.y" id="click-y">
+
+                <div class="relative">
+                    <img 
+                        src="{{ file_path }}"
+                        class="cursor-crosshair max-w-full"
+                        id="click-image">
+                    
+                    <div id="selected-point" class="absolute w-3 h-3 bg-red-500 rounded-full -translate-x-1/2 -translate-y-1/2 hidden"></div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Coordinate display and mask generation -->
+        <div id="coordinate-display">
+            <!-- Will be replaced by server response -->
+        </div>
+    </div>
+
+    <!-- Right side: Generated mask -->
+    <div id="masks-list" class="space-y-4">
+    </div>
+</div>
+
+<script>
+    document.getElementById('click-image').addEventListener('click', function(e) {
+        const clickX = document.getElementById('click-x');
+        const clickY = document.getElementById('click-y');
+        const pointElement = document.getElementById('selected-point');
+        const imageElement = document.getElementById('click-image');
+        
+        // Calculate scaling factor
+        const scaleX = imageElement.naturalWidth / imageElement.offsetWidth;
+        const scaleY = imageElement.naturalHeight / imageElement.offsetHeight;
+
+        clickX.value = Math.round(e.offsetX * scaleX);
+        clickY.value = Math.round(e.offsetY * scaleY);
+
+        pointElement.style.left = `${e.offsetX}px`;
+        pointElement.style.top = `${e.offsetY}px`;
+        pointElement.classList.remove('hidden');
+
+        htmx.trigger('#image-form', 'submit');
+
+        e.preventDefault();
+    });
+</script>
